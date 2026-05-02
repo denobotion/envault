@@ -1,0 +1,10 @@
+node_modules/
+*.log
+.env
+out/
+.cache/
+Desktop.ini
+coverage/
+*.tsbuildinfo
+build/
+.env.local
