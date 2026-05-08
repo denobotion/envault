@@ -1,6 +1,7 @@
-export { syncVault } from './sync';
-export { exportVault } from './export';
-export { importVault } from './import';
-export { diffVault } from './diff';
-export { auditVault } from './audit';
-export { verifyVault } from './verify';
+export * from './sync';
+export * from './export';
+export * from './import';
+export * from './diff';
+export * from './audit';
+export * from './verify';
+export * from './rename';
