@@ -1,3 +1,6 @@
-export { syncEnv } from './sync';
-export { exportEnv } from './export';
-export type { ExportOptions } from './export';
+export { syncVault } from './sync';
+export { exportVault } from './export';
+export { importVault } from './import';
+export { diffVault } from './diff';
+export { auditVault } from './audit';
+export { verifyVault } from './verify';
