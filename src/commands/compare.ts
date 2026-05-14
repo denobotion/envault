@@ -67,6 +67,27 @@ export async function compareEnvs(
   return { source: sourceEnv, target: targetEnv, entries };
 }
 
+/**
+ * Returns a summary count of entries grouped by status.
+ */
+export function summarizeCompareResult(result: CompareResult): Record<CompareEntry['status'], number> {
+  const summary: Record<CompareEntry['status'], number> = {
+    same: 0,
+    different: 0,
+    only_in_source: 0,
+    only_in_target: 0,
+  };
+  for (const entry of result.entries) {
+    summary[entry.status]++;
+  }
+  return summary;
+}
+
+/**
+ * Parses a plain-text .env string into a key-value map.
+ * Lines starting with '#' and empty lines are ignored.
+ * Values are stripped of surrounding double quotes.
+ */
 function parsePlainEnv(plain: string): Map<string, string> {
   const map = new Map<string, string>();
   for (const line of plain.split('\n')) {
