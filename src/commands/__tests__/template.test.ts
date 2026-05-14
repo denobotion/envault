@@ -47,6 +47,13 @@ describe('renderTemplate', () => {
     expect(result.missing).toContain('UNKNOWN_KEY');
   });
 
+  it('returns empty output for empty template string', async () => {
+    const vaultPath = await makeTmpVault();
+    const result = await renderTemplate('', 'dev', MASTER_KEY, vaultPath);
+    expect(result.output).toBe('');
+    expect(result.missing).toHaveLength(0);
+  });
+
   it('throws if environment does not exist', async () => {
     const vaultPath = await makeTmpVault();
     await expect(
