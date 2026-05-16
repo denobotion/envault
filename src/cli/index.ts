@@ -1,19 +1,73 @@
 import { Command } from 'commander';
 import { registerSyncCommands } from './syncCommand';
 import { registerInitCommands } from './initCommand';
+import { registerRotateCommands } from './rotateCommand';
+import { registerListCommands } from './listCommand';
+import { registerExportCommands } from './exportCommand';
+import { registerDiffCommands } from './diffCommand';
+import { registerAuditCommands } from './auditCommand';
+import { registerVerifyCommands } from './verifyCommand';
+import { registerRenameCommands } from './renameCommand';
+import { registerDeleteCommands } from './deleteCommand';
+import { registerCopyCommands } from './copyCommand';
+import { registerMergeCommands } from './mergeCommand';
+import { registerTagCommands } from './tagCommand';
+import { registerCloneCommands } from './cloneCommand';
+import { registerPruneCommands } from './pruneCommand';
+import { registerRestoreCommands } from './restoreCommand';
+import { registerPinCommands } from './pinCommand';
+import { registerWatchCommands } from './watchCommand';
+import { registerTemplateCommands } from './templateCommand';
+import { registerStatsCommands } from './statsCommand';
+import { registerCompressCommands } from './compressCommand';
+import { registerSchemaCommands } from './schemaCommand';
+import { registerHistoryCommands } from './historyCommand';
+import { registerValidateCommands } from './validateCommand';
+import { registerShareCommands } from './shareCommand';
+import { registerRollbackCommands } from './rollbackCommand';
+import { registerDoctorCommands } from './doctorCommand';
+import { registerPackCommands } from './packCommand';
+import { registerGrepCommands } from './grepCommand';
+import { registerPatchCommands } from './patchCommand';
+import { registerAnnotateCommands } from './annotateCommand';
+import { registerImportCommands } from './importCommand';
 
-const program = new Command();
+export function run(): void {
+  const program = new Command();
+  program.name('envault').description('Lightweight CLI for encrypting and syncing .env files').version('1.0.0');
 
-program
-  .name('envault')
-  .description('Lightweight CLI for encrypting and syncing .env files using a master key')
-  .version('0.1.0');
+  registerInitCommands(program);
+  registerSyncCommands(program);
+  registerRotateCommands(program);
+  registerListCommands(program);
+  registerExportCommands(program);
+  registerImportCommands(program);
+  registerDiffCommands(program);
+  registerAuditCommands(program);
+  registerVerifyCommands(program);
+  registerRenameCommands(program);
+  registerDeleteCommands(program);
+  registerCopyCommands(program);
+  registerMergeCommands(program);
+  registerTagCommands(program);
+  registerCloneCommands(program);
+  registerPruneCommands(program);
+  registerRestoreCommands(program);
+  registerPinCommands(program);
+  registerWatchCommands(program);
+  registerTemplateCommands(program);
+  registerStatsCommands(program);
+  registerCompressCommands(program);
+  registerSchemaCommands(program);
+  registerHistoryCommands(program);
+  registerValidateCommands(program);
+  registerShareCommands(program);
+  registerRollbackCommands(program);
+  registerDoctorCommands(program);
+  registerPackCommands(program);
+  registerGrepCommands(program);
+  registerPatchCommands(program);
+  registerAnnotateCommands(program);
 
-registerInitCommands(program);
-registerSyncCommands(program);
-
-export function run(argv: string[] = process.argv): void {
-  program.parse(argv);
+  program.parse(process.argv);
 }
-
-export { program };
