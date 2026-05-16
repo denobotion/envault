@@ -64,4 +64,14 @@ describe('registerInitCommands', () => {
     expect(mockAddKey).toHaveBeenCalledWith('default', 'a'.repeat(64));
     expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('Master key stored'));
   });
+
+  it('should exit with error if addKey rejects', async () => {
+    mockExistsSync
+      .mockReturnValueOnce(true)   // .env exists
+      .mockReturnValueOnce(false); // vault does not exist
+    mockAddKey.mockRejectedValue(new Error('keystore write failed'));
+    await program.parseAsync(['node', 'envault', 'init']);
+    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('keystore write failed'));
+    expect(processExitSpy).toHaveBeenCalledWith(1);
+  });
 });
