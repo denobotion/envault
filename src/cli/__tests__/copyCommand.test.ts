@@ -84,4 +84,21 @@ describe('registerCopyCommands', () => {
     exitSpy.mockRestore();
     errorSpy.mockRestore();
   });
+
+  it('should exit with error when copyEnv throws', async () => {
+    mockGetKey.mockResolvedValue('master-key-abc');
+    mockCopyEnv.mockRejectedValue(new Error('copy failed'));
+    const exitSpy = jest.spyOn(process, 'exit').mockImplementation(() => { throw new Error('process.exit'); });
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    const program = makeProgram();
+    await expect(
+      program.parseAsync(['node', 'envault', 'copy', 'dev', 'dev-copy'])
+    ).rejects.toThrow('process.exit');
+
+    expect(exitSpy).toHaveBeenCalledWith(1);
+
+    exitSpy.mockRestore();
+    errorSpy.mockRestore();
+  });
 });
