@@ -58,4 +58,19 @@ describe('verifyVault', () => {
     expect(result.valid).toBe(false);
     expect(result.errors[0]).toMatch(/BAD/);
   });
+
+  it('reports all decryption errors when multiple entries are invalid', async () => {
+    const keystorePath = path.join(tmpDir, 'keystore.json');
+    const masterKey = generateMasterKey();
+    addKey(keystorePath, 'default', masterKey);
+    writeVaultFile('test', 'default', [
+      { key: 'BAD_ONE', encryptedValue: 'not-valid-ciphertext' },
+      { key: 'BAD_TWO', encryptedValue: 'also-not-valid' },
+    ]);
+    const result = await verifyVault('test', keystorePath);
+    expect(result.valid).toBe(false);
+    expect(result.errors).toHaveLength(2);
+    expect(result.errors[0]).toMatch(/BAD_ONE/);
+    expect(result.errors[1]).toMatch(/BAD_TWO/);
+  });
 });
